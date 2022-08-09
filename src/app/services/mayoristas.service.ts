@@ -1,35 +1,34 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { Usuario } from '../models/usuario.model';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 const base_url = environment.base_url;
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsuariosService {
-  
-  public usuario: Usuario;
+export class MayoristasService {
+
+  public mayorista: any;
 
   constructor(private http: HttpClient) {}
 
-  // Usuario por ID
-  getUsuario(id: string): Observable<any>{
-    return this.http.get(`${base_url}/usuarios/${id}`, {
+  // Mayorista por ID
+  getMayorista(id: string): Observable<any>{
+    return this.http.get(`${base_url}/mayoristas/${id}`, {
       headers: {
         'Authorization': localStorage.getItem('token')
       }
     }).pipe(
-      map((resp: any) => resp.usuario)
+      map((resp: any) => resp.mayorista)
     )
   } 
 
-  // Listar usuarios
-  listarUsuarios( direccion : number = 1, columna: string = 'apellido' ): Observable<any>{
-    return this.http.get(`${base_url}/usuarios`, {
+  // Listar mayoristas
+  listarMayoristas( direccion : number = 1, columna: string = 'descripcion' ): Observable<any>{
+    return this.http.get(`${base_url}/mayoristas`, {
       params: {
         direccion: String(direccion),
         columna              
@@ -40,22 +39,23 @@ export class UsuariosService {
     })
   }
 
-  // Nuevo usuario
-  nuevoUsuario(data: any): Observable<any>{
-    return this.http.post(`${base_url}/usuarios`, data, {
+  // Nuevo mayorista
+  nuevoMayorista(data: any): Observable<any>{
+    return this.http.post(`${base_url}/mayoristas`, data, {
       headers: {
         'Authorization': localStorage.getItem('token')
       }
     })  
   }
 
-  // Actualizar usuario
+  // Actualizar mayorista
   actualizarUsuario(id: string, data: any): Observable<any>{
-    return this.http.put(`${base_url}/usuarios/${id}`, data, {
+    return this.http.put(`${base_url}/mayoristas/${id}`, data, {
       headers: {
         'Authorization': localStorage.getItem('token')
       }  
     })
   }
+
 
 }

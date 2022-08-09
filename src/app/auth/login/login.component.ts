@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 
 import { AlertService } from '../../services/alert.service';
 import gsap from 'gsap';
+import { MayoristasService } from '../../services/mayoristas.service';
 
 @Component({
   selector: 'app-login',
@@ -32,6 +33,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private alertService: AlertService,
+              private mayoristasService: MayoristasService,
               private authService: AuthService,
               private router: Router  
   ) {}
@@ -63,6 +65,50 @@ export class LoginComponent implements OnInit {
   }
 
   registrar(): void {
+    
+    const { descripcion, email, telefono, direccion, password, repetir } = this.registerForm;
+
+    console.log(descripcion);
+
+    // Verificar - Descripcion
+    if(descripcion.trim() === ''){
+      this.alertService.info('Debe colocar nombre o razón social');
+      return;
+    }
+
+    // Verificar - Correo electronico
+    if(email.trim() === ''){
+      this.alertService.info('Debe colocar un correo electrónico');
+      return;
+    }
+
+    // Verificar - Correo electronico
+    if(telefono.trim() === ''){
+      this.alertService.info('Debe colocar un teléfono');
+      return;
+    }
+
+    // Verificar - Direccion
+    if(direccion.trim() === ''){
+      this.alertService.info('Debe colocar una dirección');
+      return;
+    }
+
+    // Verificar - Password
+    if((password.trim() === '' || repetir.trim() === '') || (password !== repetir)){
+      this.alertService.info('Contraseña incorrecta');
+      return;
+    }
+
+    this.alertService.loading();
+
+    this.mayoristasService.nuevoMayorista(this.registerForm).subscribe({
+      next: () => {
+        this.alertService.close();
+        this.showRegister = false;
+      },
+      error: ({error}) => this.alertService.errorApi(error.message)
+    });
 
   }
 
