@@ -1,15 +1,12 @@
 <nav [ngClass]="{'-translate-x-0 ease-in opacity-100' : this.dataService.showMenu === true, '-translate-x-full ease-out opacity-0':this.dataService.showMenu === false}" class="absolute inset-0 transform duration-200 lg:transform-none lg:opacity-100 ease-in -translate-x-full lg:relative z-10 w-80 bg-primary-800 text-white h-full border-r-4 border-secondaryColor p-3">
     <div class="flex justify-between">
         <div title="perfil de usuario" routerLink="perfil" class="flex cursor-pointer hover:text-red-200">
-            <div *ngIf="authService.usuario.role === 'ADMIN_ROLE'" class="bg-blue-100 flex items-center justify-center w-14 h-14 rounded-full shadow border border-blue-200">
-                <p class="text-3xl font-semibold text-blue-900"> A </p>
-            </div>
-            <div *ngIf="authService.usuario.role === 'USER_ROLE'" class="bg-orange-100 flex items-center justify-center w-14 h-14 rounded-full shadow border border-orange-200">
-                <p class="text-3xl font-semibold text-orange-500"> E </p>
+            <div class="bg-red-100 flex items-center justify-center w-14 h-14 rounded-full shadow border border-red-200">
+                <p class="text-3xl font-semibold text-red-900"> M </p>
             </div>
             <div class='ml-2 mt-2'>
-                <p class="capitalize text-sm font-semibold"> {{ authService.usuario.apellido.toLowerCase() + ' ' + authService.usuario.nombre.toLowerCase() }} </p>
-                <p class="capitalize text-sm"> {{ authService.usuario.role === 'ADMIN_ROLE' ? 'administrador' : 'empleado' }} </p>
+                <p class="text-sm font-semibold"> {{ authService.mayorista.descripcion }} </p>
+                <p class="text-sm"> Mayorista </p>
             </div>
         </div>
         <button (click)="this.dataService.showMenu = false" class="p-2 lg:hidden focus:outline-none focus:bg-gray-600 rounded-md">

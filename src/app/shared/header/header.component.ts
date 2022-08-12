@@ -24,7 +24,6 @@ export class HeaderComponent implements OnInit {
                public dataService: DataService ) { }
 
   ngOnInit(): void {
-    // console.log(this.authService.usuario);
     this.items = items;
   }
   

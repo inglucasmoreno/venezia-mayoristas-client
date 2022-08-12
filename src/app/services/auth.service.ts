@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 import { LoginForm } from '../interfaces/login-form.inteface';
-import { UsuarioOnline } from '../models/usuarioLogin.model';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { MayoristaOnline } from '../models/mayoristaLogin.model';
 
 const baseUrl = environment.base_url;
 
@@ -15,14 +15,15 @@ const baseUrl = environment.base_url;
 })
 export class AuthService {
   
-  // Informacion de usuario logueado
-  public usuario: UsuarioOnline;
+  // Informacion de mayoristas logueado
+  public mayorista: MayoristaOnline;
 
   constructor(private http: HttpClient,
               private router: Router) {}
   
-  // Login de usuario
+  // Login de mayorista
   login( data: LoginForm ): Observable<any>{
+    console.log(data);
     return this.http.post(`${baseUrl}/auth/login`, data)
                     .pipe(
                       tap( ({token}) => {
@@ -48,8 +49,8 @@ export class AuthService {
       headers: { Authorization: token }
     }).pipe(
       map( (resp: any) => {
-        const { userId, usuario, apellido, nombre, role, permisos} = resp.usuario;
-        this.usuario = new UsuarioOnline( userId, usuario, nombre, apellido, role, permisos );
+        const { mayoristaId, email, descripcion, confirm, role, activo} = resp.mayorista;
+        this.mayorista = new MayoristaOnline( mayoristaId, email, descripcion, confirm, role, activo );
         localStorage.setItem('token', resp.token);
         return true;
       }),
@@ -63,7 +64,7 @@ export class AuthService {
     const token = localStorage.getItem('token');
     return this.http.get(`${baseUrl}/profile`,{headers:{'Authorization': token}}).pipe(
       map( (resp: any) => {
-        if(resp.usuario.role === 'ADMIN_ROLE'){
+        if(resp.mayorista.role === 'ADMIN_ROLE'){
           return true;
         }else{
           return false;

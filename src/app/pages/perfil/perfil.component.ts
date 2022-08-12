@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { UsuariosService } from '../../services/usuarios.service';
 import { AlertService } from '../../services/alert.service';
-import { Usuario } from 'src/app/models/usuario.model';
 import { DataService } from 'src/app/services/data.service';
 import gsap from 'gsap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MayoristasService } from 'src/app/services/mayoristas.service';
 
 @Component({
   selector: 'app-perfil',
@@ -18,16 +17,16 @@ export class PerfilComponent implements OnInit {
   constructor(private authService: AuthService,
               private dataService: DataService,
               private fb: FormBuilder,
-              private usuariosService: UsuariosService,
+              private mayoristasService: MayoristasService,
               private alertService: AlertService) { }
 
-  public usuarioLogin: Usuario;
+  public mayoristaLogin: any;
   public passwordForm: FormGroup;
 
   ngOnInit(): void {
     gsap.from('.gsap-contenido', { y:100, opacity: 0, duration: .2 });
     this.dataService.ubicacionActual = "Dashboard - Perfil";
-    this.getUsuario();
+    this.getMayorista();
     
     // Formulario reactivo para password
     this.passwordForm = this.fb.group({
@@ -36,12 +35,12 @@ export class PerfilComponent implements OnInit {
     });
   }
 
-  // Obtener datos de usuario
-  getUsuario(): void {
+  // Obtener datos de mayorista
+  getMayorista(): void {
     this.alertService.loading();
-    this.usuariosService.getUsuario(this.authService.usuario.userId).subscribe( (usuario: Usuario) => {
+    this.mayoristasService.getMayorista(this.authService.mayorista.mayoristaId).subscribe( (mayorista: any) => {
       this.alertService.close();
-      this.usuarioLogin = usuario;
+      this.mayoristaLogin = mayorista;
     },({error}) => {
       this.alertService.errorApi(error.msg);
     })
@@ -50,7 +49,7 @@ export class PerfilComponent implements OnInit {
   // Actualizar password
   actualizarPassword(): void {
     this.alertService.loading();
-    this.usuariosService.actualizarUsuario(this.usuarioLogin._id, this.passwordForm.value).subscribe( () => {
+    this.mayoristasService.actualizarMayorista(this.mayoristaLogin._id, this.passwordForm.value).subscribe( () => {
       this.reiniciarValores();
       this.alertService.success('Contraseña actualizada');
     },({error}) => { 

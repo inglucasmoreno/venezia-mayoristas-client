@@ -14,7 +14,7 @@ export class PermisosDirective implements OnInit {
               private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.usuarioLogin = this.authService.usuario;
+    this.usuarioLogin = this.authService.mayorista;
     this.actualizarVista();
   }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import gsap from 'gsap';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,8 @@ import gsap from 'gsap';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService,
+              public authService: AuthService) { }
 
   ngOnInit(): void { 
     gsap.from('.gsap-contenido', { y:100, opacity: 0, duration: .2 });

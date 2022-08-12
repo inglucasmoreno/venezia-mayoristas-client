@@ -19,9 +19,9 @@ export class PermisosGuard implements CanActivate {
   // Se verifica si el usuario esta autorizado para ingresar a la ruta
   verificarPermisos(route: ActivatedRouteSnapshot): boolean {
 
-    const { permisos = [], role } = this.authService.usuario;
+    const { role } = this.authService.mayorista;
 
-    if(permisos.includes(route.data.permisos) || role === 'ADMIN_ROLE'){ // Si tiene permiso o es ADMIN puede ingresar
+    if(role === 'ADMIN_ROLE'){ // Si tiene permiso o es ADMIN puede ingresar
       return true;
     }else{
       this.router.navigateByUrl('/dashboard/home');

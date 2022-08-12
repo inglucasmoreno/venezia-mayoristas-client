@@ -1,0 +1,7 @@
+<div *ngIf="estado !== ''" class="flex gsap-contenido items-center justify-center h-screen">
+  <div class="text-center p-2">
+    <h1 class="text-5xl"> {{ estado === 'exito' ? 'Registro completado correctamente' : 'Se produjo un error al confirmar tu cuenta' }} </h1>
+    <h2 class="text-gray-500 mt-5"> {{ estado == 'exito' ? 'Ahora puedes iniciar sesion en nuestra plataforma' : 'Intentalo nuevamente mas tarde' }}  </h2>
+    <button routerLink="/login" [ngClass]="{'bg-green-700':estado === 'exito', 'bg-red-700':estado === 'error'}" class="shadow w-max py-2 px-4 focus:outline-none rounded mt-10 text-white"> Iniciar sesion </button>
+  </div>
+</div>

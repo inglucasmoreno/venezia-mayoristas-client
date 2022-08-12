@@ -41,15 +41,11 @@ export class MayoristasService {
 
   // Nuevo mayorista
   nuevoMayorista(data: any): Observable<any>{
-    return this.http.post(`${base_url}/mayoristas`, data, {
-      headers: {
-        'Authorization': localStorage.getItem('token')
-      }
-    })  
+    return this.http.post(`${base_url}/mayoristas`, data)  
   }
 
   // Actualizar mayorista
-  actualizarUsuario(id: string, data: any): Observable<any>{
+  actualizarMayorista(id: string, data: any): Observable<any>{
     return this.http.put(`${base_url}/mayoristas/${id}`, data, {
       headers: {
         'Authorization': localStorage.getItem('token')

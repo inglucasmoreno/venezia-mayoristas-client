@@ -32,6 +32,18 @@ export class AlertService {
     });
   }
 
+  // Alerta - Registro completado
+  successConfirmMail(msg: string = ''): void {
+    Swal.fire({
+      icon: 'success',
+      title: 'Registro completado!',
+      text: msg,
+      showConfirmButton: true,
+      confirmButtonColor: '#A31D1E',
+      confirmButtonText: 'Entendido',
+    });
+  }
+
   // Alerta - Información
   info(msg: string): void {
     Swal.fire({

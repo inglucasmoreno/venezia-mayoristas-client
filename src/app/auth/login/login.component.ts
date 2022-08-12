@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
       return;
     }  
     this.alertService.loading();
-    this.authService.login(this.loginForm.value).subscribe(()=> {
+    this.authService.login(this.loginForm.value).subscribe((resp)=> {
       this.alertService.close();     
       this.router.navigateByUrl('dashboard/home');
     },({error}) => {
@@ -67,8 +67,6 @@ export class LoginComponent implements OnInit {
   registrar(): void {
     
     const { descripcion, email, telefono, direccion, password, repetir } = this.registerForm;
-
-    console.log(descripcion);
 
     // Verificar - Descripcion
     if(descripcion.trim() === ''){
@@ -100,11 +98,17 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    // Verificar - Password - Repetir
+    if(password !== repetir){
+      this.alertService.info('Las contraseñas deben coincidir');
+      return;
+    }
+
     this.alertService.loading();
 
     this.mayoristasService.nuevoMayorista(this.registerForm).subscribe({
       next: () => {
-        this.alertService.close();
+        this.alertService.successConfirmMail('El correo electrónico de confirmación fue enviado');
         this.showRegister = false;
       },
       error: ({error}) => this.alertService.errorApi(error.message)

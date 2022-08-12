@@ -8,10 +8,6 @@ import { PermisosGuard } from '../guards/permisos.guard';
 // Componentes
 import { PagesComponent } from './pages.component';
 import { HomeComponent } from './home/home.component';
-import { UsuariosComponent } from './usuarios/usuarios.component';
-import { NuevoUsuarioComponent } from './usuarios/nuevo-usuario.component';
-import { EditarUsuarioComponent } from './usuarios/editar/editar-usuario.component';
-import { EditarPasswordComponent } from './usuarios/editar/editar-password.component';
 import { PerfilComponent } from './perfil/perfil.component';
 
 const routes: Routes = [
@@ -26,12 +22,6 @@ const routes: Routes = [
 
             // Perfil de usuarios
             { path: 'perfil', component: PerfilComponent },
-
-            // Usuarios
-            { path: 'usuarios', data: { permisos: 'USUARIOS_NAV' }, canActivate: [PermisosGuard], component: UsuariosComponent },
-            { path: 'usuarios/nuevo', data: { permisos: 'USUARIOS_NAV' }, canActivate: [PermisosGuard], component: NuevoUsuarioComponent },
-            { path: 'usuarios/editar/:id', data: { permisos: 'USUARIOS_NAV' }, canActivate: [PermisosGuard], component: EditarUsuarioComponent },
-            { path: 'usuarios/password/:id', data: { permisos: 'USUARIOS_NAV' }, canActivate: [PermisosGuard], component: EditarPasswordComponent },
             
         ]
     }
