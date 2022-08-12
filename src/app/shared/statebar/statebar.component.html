@@ -1,19 +1,44 @@
+<!-- Modal: Correo sin verificar -->
+<app-modal [showModal]="showModal">
+    <div class="flex items-center justify-between px-2 pt-2">
+        <h1> </h1>
+        <button (click)="showModal=false" class="focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>           
+        </button>
+    </div>
+    <div class="text-sm text-center p-4">
+        <h2 class="text-xl"> Todavia no verifica su correo electronico </h2>
+        <p class="text-primary-500 mt-2"> Debe verificar su correo para poder acceder a todas las funcionalidades de la plataforma </p>
+        <button (click)="reenviarConfirmacion()" class="text-white focus:outline-none bg-red-700 p-2 rounded shadow mt-4"> Reenviar correo de confirmación </button>
+    </div>
+</app-modal>
+
+<!-- Pagina principal -->
 <div class="relative z-0 lg:flex-grow">
-    <header class="bg-primary-800 flex p-2">
+    <header class="bg-primary-800 p-2">
         <button (click)="dataService.showMenu = true" class="p-2 lg:hidden focus:outline-none focus:bg-gray-600 text-white items-center rounded-md">
             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
         </button>
-        <span class="flex items-center text-white p-2">
-            <div class="border p-1 rounded">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                </svg>
+        <div class="flex items-center justify-between text-white p-2">
+            <div class="flex items-center">
+                <div class="border p-1 rounded w-max">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                    </svg>
+                </div>
+                <span class="ml-2">
+                    {{ this.dataService.ubicacionActual }}
+                </span>
             </div>
-            <span class="ml-2">
-                {{ this.dataService.ubicacionActual }}
-            </span>
-        </span>
+            <button *ngIf="!authService.mayorista.confirm" (click)="showModal=true" title="Correo no verificado" class="bg-red-100 border-2 border-red-700 p-3 focus:outline-none rounded shadow text-red-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>                    
+            </button>
+        </div>
     </header>
 </div>

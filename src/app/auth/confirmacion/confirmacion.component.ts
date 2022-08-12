@@ -26,11 +26,11 @@ export class ConfirmacionComponent implements OnInit {
         this.mayoristasService.actualizarMayorista(id, { confirm: true }).subscribe({
           next: () => {
             this.estado = 'exito';
+            localStorage.removeItem('token');
             this.alertService.close();
           }, error: ({error}) =>{ 
             this.estado = 'error';
             this.alertService.errorApi(error.message)
-            console.log()
           }
         })
       }, error: (error) => this.alertService.errorApi(error.message)

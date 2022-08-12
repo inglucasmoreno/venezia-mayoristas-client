@@ -7,6 +7,7 @@ import { PipesModule } from '../pipes/pipes.module';
 import { LoaderComponent } from './loader/loader.component';
 import { ItemsComponent } from './header/components/items/items.component';
 import { DirectivesModule } from '../directives/directives.module';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   declarations: [
@@ -18,11 +19,13 @@ import { DirectivesModule } from '../directives/directives.module';
   imports: [
     CommonModule,
     AppRoutingModule,
+    ComponentsModule,
     PipesModule,
     DirectivesModule
   ],
   exports: [
     HeaderComponent,
+    ComponentsModule,
     StatebarComponent,
     LoaderComponent
   ]
