@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DirectivesModule } from '../directives/directives.module';
 import { PerfilComponent } from './perfil/perfil.component';
+import { NuevoPedidoComponent } from './pedidos/nuevo-pedido.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { PerfilComponent } from './perfil/perfil.component';
     HomeComponent,
     PagesComponent,
     PerfilComponent,
+    NuevoPedidoComponent,
   ],
   imports: [
     CommonModule,

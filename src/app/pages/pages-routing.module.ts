@@ -9,6 +9,7 @@ import { PermisosGuard } from '../guards/permisos.guard';
 import { PagesComponent } from './pages.component';
 import { HomeComponent } from './home/home.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { NuevoPedidoComponent } from './pedidos/nuevo-pedido.component';
 
 const routes: Routes = [
     {
@@ -22,6 +23,9 @@ const routes: Routes = [
 
             // Perfil de usuarios
             { path: 'perfil', component: PerfilComponent },
+
+            // Pedidos
+            { path: 'pedidos/nuevo', component: NuevoPedidoComponent },
             
         ]
     }
