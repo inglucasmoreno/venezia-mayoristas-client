@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-nuevo-pedido',
@@ -8,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NuevoPedidoComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+    this.dataService.ubicacionActual = "Dashboard - Nuevo pedido";
   }
+
 
 }
