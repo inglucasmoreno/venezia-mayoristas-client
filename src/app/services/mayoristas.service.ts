@@ -11,8 +11,6 @@ const base_url = environment.base_url;
 })
 export class MayoristasService {
 
-  public mayorista: any;
-
   constructor(private http: HttpClient) {}
 
   // Mayorista por ID
