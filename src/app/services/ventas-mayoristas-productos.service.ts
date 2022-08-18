@@ -33,12 +33,14 @@ export class VentasMayoristasProductosService {
   // Listar productos
   listarProductos(
     direccion: number = -1,
-    columna: string = 'createdAt'  
+    columna: string = 'createdAt',
+    pedido: string = ''  
   ): Observable<any> {
     return this.http.get(`${base_url}/ventas-mayoristas-productos`, {
       params: {
         direccion: String(direccion),
-        columna
+        columna,
+        pedido
       },
       headers: {
         'Authorization': localStorage.getItem('token')

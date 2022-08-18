@@ -10,6 +10,7 @@ import { PagesComponent } from './pages.component';
 import { HomeComponent } from './home/home.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { NuevoPedidoComponent } from './pedidos/nuevo-pedido.component';
+import { PedidosComponent } from './pedidos/pedidos.component';
 
 const routes: Routes = [
     {
@@ -26,6 +27,7 @@ const routes: Routes = [
 
             // Pedidos
             { path: 'pedidos/nuevo', component: NuevoPedidoComponent },
+            { path: 'pedidos/mis-pedidos', component: PedidosComponent },
             
         ]
     }

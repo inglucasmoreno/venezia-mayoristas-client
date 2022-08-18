@@ -11,6 +11,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { DirectivesModule } from '../directives/directives.module';
 import { PerfilComponent } from './perfil/perfil.component';
 import { NuevoPedidoComponent } from './pedidos/nuevo-pedido.component';
+import { PedidosComponent } from './pedidos/pedidos.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { NuevoPedidoComponent } from './pedidos/nuevo-pedido.component';
     PagesComponent,
     PerfilComponent,
     NuevoPedidoComponent,
+    PedidosComponent,
   ],
   imports: [
     CommonModule,

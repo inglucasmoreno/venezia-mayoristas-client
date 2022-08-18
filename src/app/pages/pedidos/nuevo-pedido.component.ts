@@ -97,8 +97,6 @@ export class NuevoPedidoComponent implements OnInit {
       }
     );
 
-    console.log(this.carrito);
-
     this.calculoPrecio();
     this.cerrarSeleccion();
 
@@ -109,7 +107,7 @@ export class NuevoPedidoComponent implements OnInit {
     this.alertService.question({ msg: 'Eliminando producto', buttonText: 'Eliminar' })
         .then(({isConfirmed}) => {  
         if(isConfirmed){
-          this.carrito = this.carrito.filter( elemento => elemento._id !== producto._id)
+          this.carrito = this.carrito.filter( elemento => elemento.producto._id !== producto.producto._id)
           this.calculoPrecio();
         };  
     });
