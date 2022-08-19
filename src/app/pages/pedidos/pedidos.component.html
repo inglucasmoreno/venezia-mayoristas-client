@@ -19,7 +19,7 @@
                 <p class="font-semibold"> {{ producto.descripcion }} </p>
                 <p class="text-gray-500 text-xs"> ${{ producto.precio_unitario | moneda }} x {{ producto.unidad_medida.descripcion }} </p>
                 <p class="text-sm"> Cantidad: {{ producto.cantidad }} </p>
-                <p class="text-sm"> Precio: {{ producto.precio | moneda }} </p>
+                <p class="text-sm"> Precio: ${{ producto.precio | moneda }} </p>
             </div>
         </div>
     </div> 
