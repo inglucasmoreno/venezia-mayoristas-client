@@ -28,9 +28,9 @@ export class ConfirmacionComponent implements OnInit {
             this.estado = 'exito';
             localStorage.removeItem('token');
             this.alertService.close();
-          }, error: ({error}) =>{ 
+          }, error: () =>{ 
             this.estado = 'error';
-            this.alertService.errorApi(error.message)
+            this.alertService.close();
           }
         })
       }, error: (error) => this.alertService.errorApi(error.message)

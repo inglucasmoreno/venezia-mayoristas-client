@@ -4,6 +4,7 @@ import { DataService } from 'src/app/services/data.service';
 import { VentasMayoristasService } from '../../services/ventas-mayoristas.service';
 import gsap from 'gsap';
 import { VentasMayoristasProductosService } from 'src/app/services/ventas-mayoristas-productos.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-pedidos',
@@ -36,6 +37,7 @@ export class PedidosComponent implements OnInit {
   }
 
   constructor(private ventasMayoristasService: VentasMayoristasService,
+              private authService: AuthService,
               private ventasMayoristasProductosService: VentasMayoristasProductosService,
               private dataService: DataService,
               private alertService: AlertService) { }
@@ -48,7 +50,11 @@ export class PedidosComponent implements OnInit {
 
   listarPedidos(): void {
     this.alertService.loading();
-    this.ventasMayoristasService.listarVentas(this.ordenar.direccion, this.ordenar.columna).subscribe({
+    this.ventasMayoristasService.listarVentas(
+      this.ordenar.direccion, 
+      this.ordenar.columna,
+      this.authService.mayorista.mayoristaId
+      ).subscribe({
       next: ({ventas}) => {
         this.pedidos = ventas;
         this.alertService.close();

@@ -1,7 +1,9 @@
 <div *ngIf="estado !== ''" class="flex gsap-contenido items-center justify-center h-screen">
   <div class="text-center p-2">
-    <h1 class="text-5xl"> {{ estado === 'exito' ? 'Registro completado correctamente' : 'Se produjo un error al confirmar tu cuenta' }} </h1>
-    <h2 class="text-gray-500 mt-5"> {{ estado == 'exito' ? 'Ahora puedes iniciar sesion en nuestra plataforma' : 'Intentalo nuevamente mas tarde' }}  </h2>
-    <button routerLink="/login" [ngClass]="{'bg-green-700':estado === 'exito', 'bg-red-700':estado === 'error'}" class="shadow w-max py-2 px-4 focus:outline-none rounded mt-10 text-white"> Iniciar sesion </button>
+    <img *ngIf="estado === 'exito'" src="assets/img/confirm.svg" class="w-1/3 mx-auto" alt="Confirmacion.svg">
+    <img *ngIf="estado !== 'exito'" src="assets/img/error.svg" class="w-1/3 md:w-1/4 mx-auto" alt="Confirmacion.svg">
+    <h1 class="text-2xl md:text-4xl"> {{ estado === 'exito' ? 'Registro completado correctamente' : 'Se produjo un error al confirmar tu cuenta' }} </h1>
+    <h2 class="text-gray-500"> {{ estado === 'exito' ? 'Ahora puedes iniciar sesion en nuestra plataforma' : 'Intentalo nuevamente mas tarde' }}  </h2>
+    <button routerLink="/login" [ngClass]="{'hover:bg-green-600':estado === 'exito', 'hover:bg-red-500':estado === 'error'}" class="shadow w-max transform duration-500 bg-primary-800 py-2 px-4 focus:outline-none rounded mt-10 text-white"> {{ estado === 'exito' ? 'Iniciar sesion' : 'Regresar' }} </button>
   </div>
 </div>

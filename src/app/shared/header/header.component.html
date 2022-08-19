@@ -25,10 +25,26 @@
             <a class="ml-2 mt-1"> Inicio </a>
         </li>
 
-        <!-- Items de navegacion -->
-        <ng-container *ngFor="let element of items">
-            <app-items *appPermisos="element.permiso" [svg]="element.svg" [route]="element.route" [item]="element.item"></app-items>
-        </ng-container>
+        <li routerLinkActive="bg-secondaryColor rounded" routerLink="perfil" class="flex transform hover:translate-x-2 duration-500 items-center outline-none cursor-pointer p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            <a class="ml-2 mt-1"> Mis datos </a>
+        </li>
+
+        <li *ngIf="authService.mayorista.confirm" routerLinkActive="bg-secondaryColor rounded" routerLink="pedidos/nuevo" class="flex transform hover:translate-x-2 duration-500 items-center outline-none cursor-pointer p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+            </svg>
+            <a class="ml-2 mt-1"> Nuevo pedido </a>
+        </li>
+
+        <li *ngIf="authService.mayorista.confirm" routerLinkActive="bg-secondaryColor rounded" routerLink="pedidos/mis-pedidos" class="flex transform hover:translate-x-2 duration-500 items-center outline-none cursor-pointer p-2">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <a class="ml-2 mt-1"> Mis pedidos </a>
+        </li>
 
         <!-- Finalizar sesion -->
         <li (click)="logout()" class="flex outline-none transform hover:translate-x-2 duration-500 items-center cursor-pointer p-2">

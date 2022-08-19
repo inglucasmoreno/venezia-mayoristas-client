@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
 
   // Modals
   public showRegister = false;
+  public showEmail = false;
 
   constructor(private fb: FormBuilder,
               private alertService: AlertService,
@@ -108,8 +109,9 @@ export class LoginComponent implements OnInit {
 
     this.mayoristasService.nuevoMayorista(this.registerForm).subscribe({
       next: () => {
-        this.alertService.successConfirmMail('El correo electrónico de confirmación fue enviado');
         this.showRegister = false;
+        this.showEmail = true;
+        this.alertService.close();
       },
       error: ({error}) => this.alertService.errorApi(error.message)
     });

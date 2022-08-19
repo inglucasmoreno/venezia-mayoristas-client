@@ -33,12 +33,14 @@ export class VentasMayoristasService {
   // Listar ventas
   listarVentas(
     direccion: number = -1,
-    columna: string = 'createdAt'  
+    columna: string = 'createdAt',
+    mayorista: string = ''  
   ): Observable<any> {
     return this.http.get(`${base_url}/ventas-mayoristas`, {
       params: {
         direccion: String(direccion),
-        columna
+        columna,
+        mayorista
       },
       headers: {
         'Authorization': localStorage.getItem('token')

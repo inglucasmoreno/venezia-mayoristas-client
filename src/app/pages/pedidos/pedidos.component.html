@@ -13,6 +13,11 @@
             <h1 class="px-2"> <span class="font-semibold"> Fecha: </span> {{ pedidoSeleccionado?.createdAt | fecha }} </h1>
             <p class="px-2 mt-1"> <span class="font-semibold"> Precio total: </span> ${{ pedidoSeleccionado?.precio_total | moneda }} </p>
         </div>
+        <p class="px-2 my-2"> <span class="font-semibold"> Estado: </span> 
+            <span [ngClass]="{'bg-yellow-100 border-yellow-300 text-yellow-700': pedidoSeleccionado?.activo, 'bg-green-100 border-green-300 text-green-700': !pedidoSeleccionado?.activo}" class="text-gray-900 p-1 text-xs rounded border font-semibold whitespace-no-wrap">
+                {{ pedidoSeleccionado?.activo ? 'Enviado' : 'Confirmado' }}
+            </span>
+         </p>
         <p class="px-2 mt-1 font-semibold text-lg"> Listado de productos </p>
         <div class="max-h-screen overflow-y-auto">
             <div *ngFor="let producto of productos" class="border p-2 my-2 border-gray-300 mx-2">
@@ -32,7 +37,7 @@
 </div>
 
 <!-- Listado de pedidos -->
-<div *ngIf="pedidos?.length > 0" class="md:max-w-5xl mx-auto">
+<div *ngIf="pedidos?.length > 0" class="md:max-w-5xl mx-auto gsap-contenido">
     <app-tarjeta-lista>
       <div class="container mx-auto">
           <div>
@@ -45,20 +50,39 @@
                   </div>
               </div>
               <div class="md:flex md:items-center md:justify-between px-4 py-2">
-                  <div class="my-2 flex sm:flex-row flex-col">
-                      <div class="flex flex-row mb-1 sm:mb-0">
-                          <div class="relative">
-                          </div>
-                      </div>
-                      <div class="block relative">
-                      </div>
-                      <select (change)="paginaActual = 1" class="bg-white text-sm focus:outline-none w-max px-2 py-2 md:ml-2 mt-2 md:mt-0 border text-gray-600 border-gray-400 rounded" [(ngModel)]="cantidadItems">
-                          <option value="10"> 10 elementos </option>
-                          <option value="20"> 20 elementos </option>
-                          <option value="50"> 50 elementos </option>
-                          <option value="100"> 100 elementos </option>
-                      </select>
-                  </div>
+                <div class="my-2 flex sm:flex-row flex-col">
+                    <div class="flex flex-row mb-1 sm:mb-0">
+                        <div class="relative">
+                            <select #txtActivo (change)="filtrarActivos(txtActivo.value)" class="h-full text-sm rounded-r border-t border-l rounded-l border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
+                                <option value='true'> Enviados </option>
+                                <option value='false'> Confirmados </option>
+                                <option value=''> Todos </option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
+                                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block relative">
+                        <!-- <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
+                            <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-500 cursor-pointer hover:text-secondary-500">
+                                <path
+                                    d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z">
+                                </path>
+                            </svg>
+                        </span>
+                        <input #txtParametro placeholder="Buscar" (keyup)="filtrarParametro(txtParametro.value)" class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
+                        /> -->
+                    </div>
+                    <select (change)="paginaActual = 1" class="bg-white text-sm focus:outline-none w-max px-2 py-2 md:py-0 md:ml-2 mt-2 md:mt-0 border text-gray-600 border-gray-400 rounded" [(ngModel)]="cantidadItems">
+                        <option value="10"> 10 elementos </option>
+                        <option value="20"> 20 elementos </option>
+                        <option value="50"> 50 elementos </option>
+                        <option value="100"> 100 elementos </option>
+                    </select>
+                </div>
               </div>
               <div class="px-4 py-2 overflow-x-auto">
                   <div class="inline-block max-h-screen overflow-y-auto min-w-full overflow-hidden pb-5">
@@ -66,7 +90,7 @@
                           <thead>
                               <tr class="border">
                                   <th class="px-5 py-2 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-900 tracking-wider">
-                                      <div (click)="ordenarPorColumna('createdAt')" class="cursor-pointer flex items-center focus:outline-none">
+                                      <div (click)="ordenarPorColumna('createdAt')" class="cursor-pointer flex items-center focus:outline-none w-max">
                                           <span> Fecha de pedido </span>
                                           <span class="ml-2 text-gray-600">    
                                               <svg *ngIf="ordenar.columna == 'createdAt' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
@@ -87,10 +111,22 @@
                                           </span>
                                       </div>
                                   </th>
+                                  <th class="px-5 border-b-2 border-gray-200 bg-gray-100 text-sm font-semibold text-gray-900 tracking-wider">
+                                    <div (click)="ordenarPorColumna('activo')" class="cursor-pointer w-max flex items-center justify-center focus:outline-none">
+                                        <span>
+                                            Estado                                               
+                                        </span>
+                                        <span class="ml-2">
+                                            <svg *ngIf="ordenar.columna == 'activo' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                            <svg *ngIf="ordenar.columna == 'activo' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                            <svg *ngIf="ordenar.columna != 'activo'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                        </span>
+                                    </div>
+                                </th>
                               </tr>
                           </thead>
                           <tbody *ngIf="pedidos">
-                              <tr (click)="seleccionarPedido(pedido)" class="animate__animated animate__fadeIn hover:bg-red-50 cursor-pointer" *ngFor="let pedido of pedidos | paginate: {itemsPerPage: cantidadItems, currentPage: paginaActual}">
+                              <tr (click)="seleccionarPedido(pedido)" class="animate__animated animate__fadeIn hover:bg-red-50 cursor-pointer" *ngFor="let pedido of pedidos | filtroPedido:filtro.parametro:filtro.activo | paginate: {itemsPerPage: cantidadItems, currentPage: paginaActual}">
                                   <td class="px-5 py-4 border-b border-gray-200 text-xs">
                                       <p class="text-gray-900 w-max whitespace-no-wrap">
                                           {{ pedido.createdAt | fecha }}
@@ -101,6 +137,11 @@
                                           ${{ pedido.precio_total | moneda }}
                                       </p>
                                   </td>
+                                  <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                                    <span [ngClass]="{'bg-yellow-100 border-yellow-300 text-yellow-700': pedido.activo, 'bg-green-100 border-green-300 text-green-700': !pedido.activo}" class="text-gray-900 p-1 rounded border font-semibold whitespace-no-wrap">
+                                        {{ pedido.activo ? 'Enviado' : 'Confirmado' }}
+                                    </span>
+                                </td>
                               </tr>
                           </tbody>
                       </table>
