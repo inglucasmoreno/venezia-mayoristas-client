@@ -58,7 +58,7 @@ export class NuevoPedidoComponent implements OnInit {
     this.alertService.loading();
     this.productosService.listarProductos().subscribe({
       next: ({productos}) => {
-        this.productos = productos;
+        this.productos = productos.filter( producto => producto.precio_mayorista );
         this.alertService.close();
       },
       error: ({error}) => {

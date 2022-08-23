@@ -60,14 +60,14 @@
             <p *ngIf="carrito.length > 0" class="text-lg font-semibold"> Listado de producto </p>
             <p *ngIf="carrito.length > 0" class="text-sm"> Precio total: <span class="font-semibold"> ${{ precioCarrito | moneda }} </span></p>
             <div class="max-h-screen overflow-y-auto mt-2">
-                <div class="border flex items-center justify-between border-gray-300 p-2 my-2" *ngFor="let producto of carrito">
+                <div class="border flex items-center justify-between border-gray-400 shadow p-2 my-2" *ngFor="let producto of carrito">
                     <div>
                         <p class="text-sm font-semibold"> {{ producto.descripcion }} </p>
                         <p class="text-xs text-gray-500"> ${{ producto.precio_unitario | moneda }} x {{ producto.unidad_medida_descripcion }} </p> 
                         <p class="text-xs"> Cantidad: {{ producto.cantidad }} </p>
                         <p class="text-xs font-semibold"> Precio: ${{ producto.precio_total | moneda }} </p>
                     </div>
-                    <button (click)="eliminarProducto(producto)" class="border border-gray-300 focus:outline-none p-2 rounded hover:bg-red-100 hover:border-red-300 text-red-700">
+                    <button (click)="eliminarProducto(producto)" class="border border-gray-400 focus:outline-none p-2 rounded hover:bg-red-100 hover:border-red-300 text-red-700">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
