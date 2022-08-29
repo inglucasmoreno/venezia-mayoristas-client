@@ -69,11 +69,14 @@ export class NuevoPedidoComponent implements OnInit {
 
   // Agregar producto
   agregarProducto(): void {
-    
+
+    if(!this.cantidad || this.cantidad < 0){
+      this.alertService.info("Debe colocar una cantidad");
+      return;
+    }
+
     let repetido = false;
     
-    console.log(this.carrito);
-
     // Verificacion: Producto repetido
     this.carrito.find( elemento => {
       if(elemento.producto._id === this.productoSeleccionado._id){
