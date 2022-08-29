@@ -65,7 +65,7 @@
                         <p class="text-sm font-semibold"> {{ producto.descripcion }} </p>
                         <p class="text-xs text-gray-500"> ${{ producto.precio_unitario | moneda }} x {{ producto.unidad_medida_descripcion }} </p> 
                         <p class="text-xs"> Cantidad: {{ producto.cantidad }} </p>
-                        <p class="text-xs font-semibold"> Precio: ${{ producto.precio_total | moneda }} </p>
+                        <p class="text-xs font-semibold"> Precio: ${{ producto.precio | moneda }} </p>
                     </div>
                     <button (click)="eliminarProducto(producto)" class="border border-gray-400 focus:outline-none p-2 rounded hover:bg-red-100 hover:border-red-300 text-red-700">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

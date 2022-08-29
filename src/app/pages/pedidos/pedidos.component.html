@@ -14,8 +14,8 @@
             <p class="px-2 mt-1"> <span class="font-semibold"> Precio total: </span> ${{ pedidoSeleccionado?.precio_total | moneda }} </p>
         </div>
         <p class="px-2 my-2"> <span class="font-semibold"> Estado: </span> 
-            <span [ngClass]="{'bg-yellow-100 border-yellow-300 text-yellow-700': pedidoSeleccionado?.activo, 'bg-green-100 border-green-300 text-green-700': !pedidoSeleccionado?.activo}" class="text-gray-900 p-1 text-xs rounded border font-semibold whitespace-no-wrap">
-                {{ pedidoSeleccionado?.activo ? 'Enviado' : 'Confirmado' }}
+            <span [ngClass]="{'bg-yellow-100 border-yellow-300 text-yellow-700': pedidoSeleccionado?.estado === 'Pendiente', 'bg-green-100 border-green-300 text-green-700': pedidoSeleccionado?.estado === 'Completado'}" class="text-gray-900 p-1 text-xs rounded border font-semibold whitespace-no-wrap">
+                {{ pedidoSeleccionado?.estado }}
             </span>
          </p>
         <p class="px-2 mt-1 font-semibold text-lg"> Listado de productos </p>
@@ -103,14 +103,14 @@
                                       </div>
                                   </th>
                                   <th class="px-5 border-b-2 border-gray-200 bg-gray-100 text-sm font-semibold text-gray-900 tracking-wider">
-                                    <div (click)="ordenarPorColumna('activo')" class="cursor-pointer w-max flex items-center justify-center focus:outline-none">
+                                    <div (click)="ordenarPorColumna('estado')" class="cursor-pointer w-max flex items-center justify-center focus:outline-none">
                                         <span>
                                             Estado                                               
                                         </span>
                                         <span class="ml-2">
-                                            <svg *ngIf="ordenar.columna == 'activo' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
-                                            <svg *ngIf="ordenar.columna == 'activo' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
-                                            <svg *ngIf="ordenar.columna != 'activo'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                            <svg *ngIf="ordenar.columna == 'estado' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                            <svg *ngIf="ordenar.columna == 'estado' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                            <svg *ngIf="ordenar.columna != 'estado'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                                         </span>
                                     </div>
                                 </th>
@@ -129,8 +129,8 @@
                                       </p>
                                   </td>
                                   <td class="px-5 py-2 border-b border-gray-200 text-xs">
-                                    <span [ngClass]="{'bg-yellow-100 border-yellow-300 text-yellow-700': pedido.activo, 'bg-green-100 border-green-300 text-green-700': !pedido.activo}" class="text-gray-900 p-1 rounded border font-semibold whitespace-no-wrap">
-                                        {{ pedido.activo ? 'Enviado' : 'Confirmado' }}
+                                    <span [ngClass]="{'bg-yellow-100 border-yellow-300 text-yellow-700': pedido.estado === 'Pendiente', 'bg-green-100 border-green-300 text-green-700': pedido.estado === 'Completado'}" class="text-gray-900 p-1 rounded border font-semibold whitespace-no-wrap">
+                                        {{ pedido.estado }}
                                     </span>
                                 </td>
                               </tr>

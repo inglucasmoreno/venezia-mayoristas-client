@@ -72,9 +72,11 @@ export class NuevoPedidoComponent implements OnInit {
     
     let repetido = false;
     
+    console.log(this.carrito);
+
     // Verificacion: Producto repetido
     this.carrito.find( elemento => {
-      if(elemento._id === this.productoSeleccionado._id){
+      if(elemento.producto._id === this.productoSeleccionado._id){
         repetido = true;
         elemento.cantidad += this.dataService.redondear(this.cantidad, 2);
         elemento.precio += this.dataService.redondear(this.productoSeleccionado.precio_mayorista * this.cantidad, 2);
@@ -89,6 +91,7 @@ export class NuevoPedidoComponent implements OnInit {
         precio_unitario: this.productoSeleccionado.precio_mayorista,
         precio: this.productoSeleccionado.precio_mayorista * this.cantidad,
         unidad_medida: this.productoSeleccionado.unidad_medida._id,
+        entregado: true,
         unidad_medida_descripcion: this.productoSeleccionado.unidad_medida.descripcion,
         cantidad: this.cantidad, 
         precio_total: this.dataService.redondear(this.productoSeleccionado.precio_mayorista * this.cantidad, 2),
@@ -117,7 +120,7 @@ export class NuevoPedidoComponent implements OnInit {
   calculoPrecio(): void {
     let precioTMP = 0;
     this.carrito.map( elemento => {
-      precioTMP += elemento.precio_total;
+      precioTMP += elemento.precio;
     })
     this.precioCarrito = precioTMP;
     this.almacenarLocalStorage();    
@@ -146,6 +149,10 @@ export class NuevoPedidoComponent implements OnInit {
           const data = {
             pedido: {
               mayorista: this.authService.mayorista.mayoristaId,
+              repartidor: '333333333333333333333333', // Repartido por defecto -> 'Sin repartidor'
+              deuda: false,
+              deuda_monto: 0,
+              estado: 'Pendiente',
               precio_total: this.precioCarrito,
               creatorUser: this.authService.mayorista.mayoristaId,
               updatorUser: this.authService.mayorista.mayoristaId
@@ -183,7 +190,7 @@ export class NuevoPedidoComponent implements OnInit {
   reiniciarPedido(): void {
     this.productoSeleccionado = null;
     this.carrito = [];
-    this.cantidad = 0;
+    this.cantidad = null;
     this.precioCarrito = 0; 
     this.almacenarLocalStorage();      
   }
