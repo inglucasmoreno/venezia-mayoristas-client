@@ -14,9 +14,9 @@
             <p class="px-2 mt-1"> <span class="font-semibold"> Precio total: </span> ${{ pedidoSeleccionado?.precio_total | moneda }} </p>
         </div>
         <p class="px-2 my-2"> <span class="font-semibold"> Estado: </span> 
-            <span [ngClass]="{'bg-yellow-100 border-yellow-300 text-yellow-700': pedidoSeleccionado?.estado === 'Pendiente', 'bg-green-100 border-green-300 text-green-700': pedidoSeleccionado?.estado === 'Completado'}" class="text-gray-900 p-1 text-xs rounded border font-semibold whitespace-no-wrap">
-                {{ pedidoSeleccionado?.estado }}
-            </span>
+            <span class="border p-1 rounded font-semibold text-xs" [ngClass]="{'bg-yellow-100 border-yellow-300 text-yellow-700': pedidoSeleccionado?.estado === 'Pendiente', 'bg-green-100 border-green-300 text-green-700': pedidoSeleccionado?.estado === 'Completado', 'bg-orange-100 border-orange-300 text-orange-700': pedidoSeleccionado?.estado === 'Cancelado', 'bg-blue-100 border-blue-300 text-blue-700': pedidoSeleccionado?.estado === 'Enviado', 'bg-red-100 border-red-300 text-red-700': pedidoSeleccionado?.estado === 'Deuda'}"> 
+                {{ pedidoSeleccionado?.estado }} 
+            </span> 
          </p>
         <p class="px-2 mt-1 font-semibold text-lg"> Listado de productos </p>
         <div class="max-h-screen overflow-y-auto">
@@ -54,8 +54,11 @@
                     <div class="flex flex-row mb-1 sm:mb-0">
                         <div class="relative">
                             <select #txtActivo (change)="filtrarActivos(txtActivo.value)" class="h-full text-sm rounded-r border-t border-l rounded-l border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
-                                <option value='true'> Enviados </option>
-                                <option value='false'> Confirmados </option>
+                                <option value='Pendiente'> Pedientes </option>
+                                <option value='Enviado'> Enviados </option>
+                                <option value='Cancelado'> Cancelados </option>
+                                <option value='Deuda'> Deudas </option>
+                                <option value='Completado'> Completados </option>
                                 <option value=''> Todos </option>
                             </select>
                             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -129,7 +132,7 @@
                                       </p>
                                   </td>
                                   <td class="px-5 py-2 border-b border-gray-200 text-xs">
-                                    <span [ngClass]="{'bg-yellow-100 border-yellow-300 text-yellow-700': pedido.estado === 'Pendiente', 'bg-green-100 border-green-300 text-green-700': pedido.estado === 'Completado'}" class="text-gray-900 p-1 rounded border font-semibold whitespace-no-wrap">
+                                    <span [ngClass]="{'bg-yellow-100 border-yellow-300 text-yellow-700': pedido.estado === 'Pendiente', 'bg-green-100 border-green-300 text-green-700': pedido.estado === 'Completado', 'bg-orange-100 border-orange-300 text-orange-700': pedido.estado === 'Cancelado', 'bg-blue-100 border-blue-300 text-blue-700': pedido.estado === 'Enviado', 'bg-red-100 border-red-300 text-red-700': pedido.estado === 'Deuda'}" class="text-gray-900 font-semibold p-1 rounded border w-max whitespace-no-wrap">
                                         {{ pedido.estado }}
                                     </span>
                                 </td>

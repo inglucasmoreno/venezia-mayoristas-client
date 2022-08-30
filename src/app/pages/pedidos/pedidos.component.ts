@@ -26,7 +26,7 @@ export class PedidosComponent implements OnInit {
 
   // Filtrado
   public filtro = {
-    activo: 'true',
+    activo: 'Pendiente',
     parametro: ''
   }
 
