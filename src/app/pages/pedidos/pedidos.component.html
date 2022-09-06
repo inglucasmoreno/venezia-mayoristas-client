@@ -17,10 +17,26 @@
             <span class="border p-1 rounded font-semibold text-xs" [ngClass]="{'bg-yellow-100 border-yellow-300 text-yellow-700': pedidoSeleccionado?.estado === 'Pendiente', 'bg-green-100 border-green-300 text-green-700': pedidoSeleccionado?.estado === 'Completado', 'bg-orange-100 border-orange-300 text-orange-700': pedidoSeleccionado?.estado === 'Cancelado', 'bg-blue-100 border-blue-300 text-blue-700': pedidoSeleccionado?.estado === 'Enviado', 'bg-red-100 border-red-300 text-red-700': pedidoSeleccionado?.estado === 'Deuda'}"> 
                 {{ pedidoSeleccionado?.estado }} 
             </span> 
-         </p>
+        </p>
+        <p *ngIf="pedidoSeleccionado?.estado === 'Completado' || pedidoSeleccionado?.estado === 'Deuda'" class="p-2"> 
+            <span class="font-semibold"> 
+                Monto recibido: 
+            </span>
+            <span>
+                ${{ pedidoSeleccionado?.monto_recibido | moneda }} 
+            </span>
+          </p>
+          <p *ngIf="pedidoSeleccionado?.estado === 'Deuda'" class="p-2 text-red-700"> 
+            <span class="font-semibold"> 
+                Monto de deuda: 
+            </span>
+            <span>
+                ${{ pedidoSeleccionado?.deuda_monto | moneda }} 
+            </span>
+          </p>
         <p class="px-2 mt-1 font-semibold text-lg"> Listado de productos </p>
         <div class="max-h-screen overflow-y-auto">
-            <div *ngFor="let producto of productos" class="border p-2 my-2 border-gray-400 mx-2">
+            <div [ngClass]="{'bg-green-100 border-green-300': ((pedidoSeleccionado?.estado === 'Deuda' || pedidoSeleccionado?.estado === 'Completado') && producto.entregado), 'bg-red-100 border-red-300': ((pedidoSeleccionado?.estado === 'Deuda' || pedidoSeleccionado?.estado === 'Completado') && !producto.entregado)}" *ngFor="let producto of productos" class="border p-2 my-2 border-gray-400 mx-2">
                 <p class="font-semibold"> {{ producto.descripcion }} </p>
                 <p class="text-gray-500 text-xs"> ${{ producto.precio_unitario | moneda }} x {{ producto.unidad_medida.descripcion }} </p>
                 <p class="text-sm"> Cantidad: {{ producto.cantidad }} </p>
@@ -93,6 +109,16 @@
                                           </span>
                                       </div>
                                   </th>
+                                  <th class="px-5 py-2 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-900 tracking-wider">
+                                    <div (click)="ordenarPorColumna('numero')" class="cursor-pointer flex items-center justify-center focus:outline-none">
+                                        <span> Número de pedido </span>
+                                        <span class="ml-2 text-gray-600">    
+                                            <svg *ngIf="ordenar.columna == 'numero' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                            <svg *ngIf="ordenar.columna == 'numero' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                            <svg *ngIf="ordenar.columna != 'numero'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                        </span>
+                                    </div>
+                                </th>
                                   <th class="px-5 border-b-2 border-gray-200 bg-gray-100 text-sm font-semibold text-gray-900 tracking-wider">
                                       <div (click)="ordenarPorColumna('precio_total')" class="cursor-pointer w-max flex items-center justify-center focus:outline-none">
                                           <span>
@@ -121,21 +147,26 @@
                           </thead>
                           <tbody *ngIf="pedidos">
                               <tr (click)="seleccionarPedido(pedido)" class="animate__animated animate__fadeIn hover:bg-red-50 cursor-pointer" *ngFor="let pedido of pedidos | filtroPedido:filtro.parametro:filtro.activo | paginate: {itemsPerPage: cantidadItems, currentPage: paginaActual}">
-                                  <td class="px-5 py-4 border-b border-gray-200 text-xs">
-                                      <p class="text-gray-900 w-max whitespace-no-wrap">
-                                          {{ pedido.createdAt | fecha }}
-                                      </p>
-                                  </td>
-                                  <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                                    <td class="px-5 py-4 border-b border-gray-200 text-xs">
+                                        <p class="text-gray-900 w-max whitespace-no-wrap">
+                                            {{ pedido.createdAt | fecha }}
+                                        </p>
+                                    </td>
+                                    <td class="px-5 py-4 border-b border-gray-200 text-xs">
+                                        <p class="text-gray-900 text-center whitespace-no-wrap">
+                                            {{ pedido.numero }}
+                                        </p>
+                                    </td>
+                                    <td class="px-5 py-2 border-b border-gray-200 text-xs">
                                       <p class="text-gray-900 whitespace-no-wrap">
                                           ${{ pedido.precio_total | moneda }}
                                       </p>
-                                  </td>
-                                  <td class="px-5 py-2 border-b border-gray-200 text-xs">
-                                    <span [ngClass]="{'bg-yellow-100 border-yellow-300 text-yellow-700': pedido.estado === 'Pendiente', 'bg-green-100 border-green-300 text-green-700': pedido.estado === 'Completado', 'bg-orange-100 border-orange-300 text-orange-700': pedido.estado === 'Cancelado', 'bg-blue-100 border-blue-300 text-blue-700': pedido.estado === 'Enviado', 'bg-red-100 border-red-300 text-red-700': pedido.estado === 'Deuda'}" class="text-gray-900 font-semibold p-1 rounded border w-max whitespace-no-wrap">
-                                        {{ pedido.estado }}
-                                    </span>
-                                </td>
+                                    </td>
+                                    <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                                        <span [ngClass]="{'bg-yellow-100 border-yellow-300 text-yellow-700': pedido.estado === 'Pendiente', 'bg-green-100 border-green-300 text-green-700': pedido.estado === 'Completado', 'bg-orange-100 border-orange-300 text-orange-700': pedido.estado === 'Cancelado', 'bg-blue-100 border-blue-300 text-blue-700': pedido.estado === 'Enviado', 'bg-red-100 border-red-300 text-red-700': pedido.estado === 'Deuda'}" class="text-gray-900 font-semibold p-1 rounded border w-max whitespace-no-wrap">
+                                            {{ pedido.estado }}
+                                        </span>
+                                    </td>
                               </tr>
                           </tbody>
                       </table>
